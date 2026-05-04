@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rose Medical AI</title>
+</head>
+<body>
+  <h1>Rose Medical AI 🌹</h1>
+
+  <input id="input" placeholder="Tanya gejala..." />
+  <button onclick="send()">Kirim</button>
+  <p id="output"></p>
+
+  <script>
+    async function send() {
+      const text = document.getElementById("input").value;
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({message: text})
+      });
+      const data = await res.json();
+      document.getElementById("output").innerText =
+        data.choices?.[0]?.message?.content || "Error";
+    }
+  </script>
+</body>
+</html>
