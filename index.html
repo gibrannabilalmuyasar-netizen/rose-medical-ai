@@ -1,27 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Rose Medical AI</title>
+  <title>🌹 Rose Medical AI</title>
 </head>
 <body>
-  <h1>Rose Medical AI 🌹</h1>
 
-  <input id="input" placeholder="Tanya gejala..." />
-  <button onclick="send()">Kirim</button>
-  <p id="output"></p>
+  <h1>🌹 Rose Medical AI</h1>
+  <p>Konsultasi kesehatan sederhana</p>
+
+  <input id="input" placeholder="Masukkan gejala..." />
+  <button onclick="kirim()">Kirim</button>
+
+  <p id="hasil"></p>
 
   <script>
-    async function send() {
-      const text = document.getElementById("input").value;
+    async function kirim() {
+      const input = document.getElementById("input").value;
+
       const res = await fetch("/api/chat", {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({message: text})
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: input })
       });
+
       const data = await res.json();
-      document.getElementById("output").innerText =
-        data.choices?.[0]?.message?.content || "Error";
+
+      document.getElementById("hasil").innerText =
+        data.reply || "Terjadi error";
     }
   </script>
+
 </body>
 </html>
